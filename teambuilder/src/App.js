@@ -18,13 +18,26 @@ function App() {
       role: "Back End"
     }
   ]);
+
+  const [memberToEdit, setMemberToEdit] = useState("");
+
+  const editMember = member => {
+    setMemberToEdit(member);
+  };
+
   return (
     <div className="App">
       <h1>TeamBuilder</h1>
       {team.map(member => {
-        return <TeamMember member={member} key={member.name} />;
+        return (
+          <TeamMember
+            member={member}
+            key={member.name}
+            editMember={editMember}
+          />
+        );
       })}
-      <Form setTeam={setTeam} team={team} />
+      <Form setTeam={setTeam} team={team} memberToEdit={memberToEdit} />
     </div>
   );
 }

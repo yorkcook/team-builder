@@ -8,6 +8,14 @@ const TeamMember = props => {
         <li>{props.member.email}</li>
         <li>{props.member.role}</li>
       </ul>
+      <button
+        onClick={() => {
+          console.log("test");
+          props.editMember(props.member);
+        }}
+      >
+        Edit
+      </button>
     </div>
   );
 };

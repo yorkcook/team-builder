@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Form = props => {
   const [formState, setFormState] = useState({
@@ -7,11 +7,30 @@ const Form = props => {
     role: ""
   });
 
+  //   const submitHandler = e => {
+  //     e.preventDefault();
+  //     props.setTeam([...props.team, formState]);
+  //     e.target.reset();
+  //     console.log(formState);
+  //   };
+
   const submitHandler = e => {
     e.preventDefault();
-    props.setTeam([...props.team, formState]);
-    e.target.reset();
-    console.log(formState);
+    if (props.memberToEdit) {
+      let updated = props.team.map(member => {
+        if (member.indexNumber === props.memberToEdit.indexNumber) {
+          return formState;
+        } else {
+          return member;
+        }
+      });
+      props.setTeam([...updated]);
+    } else {
+      props.setTeam([
+        ...props.team,
+        { ...formState, indexNumber: props.team.length }
+      ]);
+    }
   };
 
   const changeHandler = e => {
@@ -20,6 +39,16 @@ const Form = props => {
       [e.target.name]: e.target.value
     });
   };
+
+  useEffect(() => {
+    if (props.memberToEdit) {
+      setFormState({
+        name: props.memberToEdit.name,
+        email: props.memberToEdit.email,
+        role: props.memberToEdit.role
+      });
+    }
+  }, [props.memberToEdit]);
 
   return (
     <div>
