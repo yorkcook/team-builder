@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-const Form = () => {
-  const [teamMembers, setTeamMembers] = useState({
+const Form = props => {
+  const [formState, setFormState] = useState({
     name: "",
     email: "",
     role: ""
@@ -9,13 +9,14 @@ const Form = () => {
 
   const submitHandler = e => {
     e.preventDefault();
+    props.setTeam([...props.team, formState]);
     e.target.reset();
-    console.log(teamMembers);
+    console.log(formState);
   };
 
   const changeHandler = e => {
-    setTeamMembers({
-      ...teamMembers,
+    setFormState({
+      ...formState,
       [e.target.name]: e.target.value
     });
   };
@@ -30,7 +31,7 @@ const Form = () => {
             name="name"
             type="text"
             placeholder="Enter Name Here"
-            value={teamMembers.name}
+            value={formState.name}
             onChange={changeHandler}
           />
         </label>
@@ -40,7 +41,7 @@ const Form = () => {
             name="email"
             type="text"
             placeholder="Enter Email Here"
-            value={teamMembers.email}
+            value={formState.email}
             onChange={changeHandler}
           />
         </label>
@@ -50,7 +51,7 @@ const Form = () => {
             name="role"
             type="text"
             placeholder="Enter Role Here"
-            value={teamMembers.role}
+            value={formState.role}
             onChange={changeHandler}
           />
         </label>
